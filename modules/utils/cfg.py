@@ -17,4 +17,4 @@ OBSTICE_PATH = {
 BMGPATH = os.path.join(os.getcwd(), "Skier/resources/music/bgm.mp3")
 FONTPATH = os.path.join(os.getcwd(), "Skier/resources/font/FZSTK.TTF")
 
-HIGHEST_SCORE_RECORD_FILEPATH = 'Skier/scores.rec'
+HIGHEST_SCORE_RECORD_FILEPATH = 'Skier/modules/utils/scores.rec'
