@@ -31,8 +31,8 @@ def main():
         distance = 0
         score = 0
         speed = [0, 6]
-        base_speed = 7.0
-        speed_bonus = 0.0
+        base_speed = 7
+        speed_bonus = 0
         added_trees = 0
         added_flags = 0
         speed_levels = [250, 500, 750, 1000, 1500, 2000]
@@ -46,7 +46,7 @@ def main():
         running = True
         while running:
             for event in pygame.event.get():
-                if event.type == pygame.QUIT or event.key == pygame.K_ESCAPE:
+                if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                     pygame.quit()
                     sys.exit()
                 if event.type == pygame.KEYDOWN:
@@ -68,7 +68,9 @@ def main():
                 obstaclesFlag = 0
                 distance -=1280
                 for obstacle in obstacles0:
-                    obstacle.location[1] = obstacle.location[1] - 1280
+                    location = obstacle.getLocation()
+                    location[1] = location[1] - 1280
+                    obstacle.setLocation(location)
                 obstacles1 = createObstacles(10, 19, added_flags, "flag")
                 obstacles = addObstacles(obstacles0, obstacles1)
             for obstacle in obstacles:
@@ -90,7 +92,7 @@ def main():
                             running = False
                             break
                 elif obs.attribute == "flag" and not obs.passed:
-                    score += 10
+                    score += 250
                     obs.passed = True
                     try:
                         obstacles.remove(obs)

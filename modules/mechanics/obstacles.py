@@ -1,5 +1,5 @@
 import pygame, random
-from modules.utils import cfg
+from modules.utils.cfg import SKIER_DLL, OBSTICE_PATH
 from modules.classes.obstacle import ObstacleClass
 
 def createObstacles(s, e, num, obs="None"):
@@ -16,8 +16,8 @@ def createObstacles(s, e, num, obs="None"):
                 attribute = obs
                 ref -= 1
             else:
-                attribute = random.choice(list(cfg.OBSTICE_PATH.keys()))
-            img_path = cfg.OBSTICE_PATH[attribute]
+                attribute = random.choice(list(OBSTICE_PATH.keys()))
+            img_path = OBSTICE_PATH[attribute]
             obstacle = ObstacleClass(img_path, location, attribute)
             obstacles.add(obstacle)
     return obstacles
@@ -33,7 +33,7 @@ def addObstacles(obstacles0, obstacles1):
 
 def updateObstacles(score, added_trees, added_flags,):
     # Árboles
-    if score > 0 and score % 200 == 0 and added_trees < 20:
+    if score > 0 and score % 150 == 0 and added_trees < 20:
         added_trees += 2
     # Banderas
     if score > 0 and score % 200 == 0 and added_flags < 10:

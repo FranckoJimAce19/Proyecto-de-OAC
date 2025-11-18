@@ -1,4 +1,4 @@
-import os 
+import os, ctypes
 FPS = 40
 SCREENSIZE = (640, 640)
 SKIER_IMAGE_PATH = [
@@ -18,3 +18,6 @@ BMGPATH = os.path.join(os.getcwd(), "Skier/resources/music/bgm.mp3")
 FONTPATH = os.path.join(os.getcwd(), "Skier/resources/font/FZSTK.TTF")
 
 HIGHEST_SCORE_RECORD_FILEPATH = 'Skier/modules/utils/scores.rec'
+
+SKIER_DLL_PATH = os.path.join(os.getcwd(), "Skier/modules/utils/Skier_dll.dll")
+SKIER_DLL = ctypes.CDLL(SKIER_DLL_PATH)
