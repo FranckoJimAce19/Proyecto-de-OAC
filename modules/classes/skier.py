@@ -19,7 +19,6 @@ class SkierClass(pygame.sprite.Sprite):
         SKIER_DLL.Skier_getSpeed(self.skier_ptr, ctypes.byref(speed_x), ctypes.byref(speed_y))
         self.speed = [speed_x.value, speed_y.value]
         self.lives = SKIER_DLL.Skier_getLives(self.skier_ptr)
-       
 
     def turn(self, num):
         SKIER_DLL.Skier_turn(self.skier_ptr, num)
@@ -58,7 +57,6 @@ class SkierClass(pygame.sprite.Sprite):
         self.speed = [speed_x.value, speed_y.value]
 
     def setup_prototypes(self):
-        """Configurar los prototipos de las funciones de la DLL"""
         SKIER_DLL.Skier_create.restype = ctypes.c_void_p
         SKIER_DLL.Skier_turn.argtypes = [ctypes.c_void_p, ctypes.c_int]
         SKIER_DLL.Skier_move.argtypes = [ctypes.c_void_p]

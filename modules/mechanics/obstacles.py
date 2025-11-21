@@ -1,25 +1,23 @@
-import pygame, random
+import pygame, random, ctypes
 from modules.utils.cfg import SKIER_DLL, OBSTICE_PATH
 from modules.classes.obstacle import ObstacleClass
 
 def createObstacles(s, e, num, obs="None"):
     obstacles = pygame.sprite.Group()
-    ref = num
-    locations = []
-    for i in range(10+num):
-        row = random.randint(s, e)
-        col = random.randint(0, 9)
-        location = [col * 64 + 20, row * 64 + 20]
-        if location not in locations:
-            locations.append(location)
-            if (obs == "tree" or obs == "flag") and (ref != 0 and ref <= num):
-                attribute = obs
-                ref -= 1
-            else:
-                attribute = random.choice(list(OBSTICE_PATH.keys()))
-            img_path = OBSTICE_PATH[attribute]
-            obstacle = ObstacleClass(img_path, location, attribute)
-            obstacles.add(obstacle)
+    MAX_OBS = 50
+    location = ctypes.c_int * 2
+    locations_array = (location * MAX_OBS)()
+    attribute = ctypes.c_char * 20
+    attributes_array = (attribute * MAX_OBS)()
+    num_obstacles = ctypes.c_int(0)
+    obs_bytes = obs.encode('utf-8') if obs != "None" else "None".encode('utf-8')
+    SKIER_DLL.createObstacles(s, e, num, obs_bytes, locations_array, attributes_array, ctypes.byref(num_obstacles))
+    for i in range(num_obstacles.value):
+        location = [locations_array[i][0], locations_array[i][1]]
+        attribute = attributes_array[i].value.decode('utf-8')
+        img_path = OBSTICE_PATH[attribute]
+        obstacle = ObstacleClass(img_path, location, attribute)
+        obstacles.add(obstacle)
     return obstacles
 
 def addObstacles(obstacles0, obstacles1):
@@ -32,10 +30,20 @@ def addObstacles(obstacles0, obstacles1):
 
 
 def updateObstacles(score, added_trees, added_flags,):
-    # Árboles
-    if score > 0 and score % 150 == 0 and added_trees < 20:
-        added_trees += 2
-    # Banderas
-    if score > 0 and score % 200 == 0 and added_flags < 10:
-        added_flags += 1
-    return added_trees, added_flags
+    trees_ptr = ctypes.c_int(added_trees)
+    flags_ptr = ctypes.c_int(added_flags)
+    SKIER_DLL.updateObstacles(score, ctypes.byref(trees_ptr), ctypes.byref(flags_ptr))
+    return trees_ptr.value, flags_ptr.value
+
+def setup_prototupes(self):
+    SKIER_DLL.createObstacles.argtypes = [
+        ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_char_p,
+        ctypes.POINTER(ctypes.c_int * 2),
+        ctypes.POINTER(ctypes.c_char * 20),
+        ctypes.POINTER(ctypes.c_int)  
+    ]
+    SKIER_DLL.updateObstacles.argtypes = [
+        ctypes.c_int,
+        ctypes.POINTER(ctypes.c_int),
+        ctypes.POINTER(ctypes.c_int)
+    ]
