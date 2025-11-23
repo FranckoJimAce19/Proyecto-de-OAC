@@ -57,6 +57,8 @@ extern "C" {
 	SKIERDLL_API void Obstacle_setPassed(Obstacle* obstacle, bool passed);
 
 	//Obstacles
+	SKIERDLL_API void srand_asm();
+	SKIERDLL_API int rand_asm();
 	SKIERDLL_API void createObstacles(int start_row, int end_row, int num, const char* obs_type, int(*locations)[2], char(*atrtributes)[20], int* num_obstacles);
 	SKIERDLL_API void updateObstacles(int score, int* added_trees, int* added_flags);
 
