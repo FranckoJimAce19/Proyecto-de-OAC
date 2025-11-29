@@ -10,13 +10,6 @@
 
 //Skier
 SKIERDLL_API Skier* Skier_create() {
-    //Skier* skier = (Skier*)malloc(sizeof(Skier));
-    //skier->direction = 0;
-    //skier->rect_center_x = 320;
-    //skier->rect_center_y = 100;
-    //skier->speed_x = skier->direction;
-    //skier->speed_y = 6 - abs(skier->direction) * 2;
-    //skier->lives = 3;
     Skier* skier;
     __asm {
         PUSH 24
@@ -50,11 +43,6 @@ SKIERDLL_API Skier* Skier_create() {
 }
 
 SKIERDLL_API void Skier_turn(Skier* skier, int num) {
-    //skier->direction += num;
-    //if (skier->direction < -2) skier->direction = -2;
-    //if (skier->direction > 2) skier->direction = 2;
-    //skier->speed_x = skier->direction;
-    //skier->speed_y = 6 - abs(skier->direction) * 2;
     __asm {
         MOV EAX, skier
         MOV ECX, num
@@ -86,9 +74,6 @@ SKIERDLL_API void Skier_turn(Skier* skier, int num) {
     }
 }
 SKIERDLL_API void Skier_move(Skier* skier) {
-    //skier->rect_center_x += skier->speed_x;
-    //if (skier->rect_center_x < 20) skier->rect_center_x = 20;
-    //if (skier->rect_center_x > 620) skier->rect_center_x = 620;
     __asm {
         MOV EAX, skier
         MOV ECX, DWORD PTR [EAX + 12]
@@ -109,9 +94,6 @@ SKIERDLL_API void Skier_move(Skier* skier) {
     }
 }
 SKIERDLL_API void Skier_setForward(Skier* skier) {
-    //skier->direction = 0;
-    //skier->speed_x = skier->direction;
-    //skier->speed_y = 6 - abs(skier->direction) * 2;
     __asm {
         MOV EAX, skier
         MOV DWORD PTR [EAX], 0
@@ -120,7 +102,6 @@ SKIERDLL_API void Skier_setForward(Skier* skier) {
     }
 }
 SKIERDLL_API int Skier_getDirection(Skier* skier) {
-    //return skier->direction;
     int result;
     __asm {
         MOV EAX, skier
@@ -130,8 +111,6 @@ SKIERDLL_API int Skier_getDirection(Skier* skier) {
     return result;
 }
 SKIERDLL_API void Skier_getPosition(Skier* skier, int* x, int* y) {
-    //*x = skier->rect_center_x;
-    //*y = skier->rect_center_y;
     __asm {
         MOV EAX, skier
         MOV EBX, x
@@ -145,8 +124,6 @@ SKIERDLL_API void Skier_getPosition(Skier* skier, int* x, int* y) {
     }
 }
 SKIERDLL_API void Skier_getSpeed(Skier* skier, int* speed_x, int* speed_y) {
-    //*speed_x = skier->speed_x;
-    //*speed_y = skier->speed_y;
     __asm {
         MOV EAX, skier
         MOV EBX, speed_x
@@ -160,7 +137,6 @@ SKIERDLL_API void Skier_getSpeed(Skier* skier, int* speed_x, int* speed_y) {
     }
 }
 SKIERDLL_API int Skier_getLives(Skier* skier) {
-    //return skier->lives;
     int result;
     __asm {
         MOV EAX, skier
@@ -172,18 +148,6 @@ SKIERDLL_API int Skier_getLives(Skier* skier) {
 
 //Obstacle
 SKIERDLL_API Obstacle* Obstacle_create(int location_x, int location_y, const char* attribute) {
-    //Obstacle* obstacle = (Obstacle*)malloc(sizeof(Obstacle));
-    //if (!obstacle) return nullptr;
-    //obstacle->location_x = location_x;
-    //obstacle->location_y = location_y;
-    //if (attribute) {
-    //    strncpy_s(obstacle->attribute, attribute, sizeof(obstacle->attribute) - 1);
-    //    obstacle->attribute[sizeof(obstacle->attribute) - 1] = '\0';
-    //} else {
-    //    obstacle->attribute[0] = '\0';
-    //}
-    //obstacle->passed = false;
-    //return obstacle;
     Obstacle* obstacle;
     __asm {
         PUSH 32
@@ -232,7 +196,6 @@ SKIERDLL_API Obstacle* Obstacle_create(int location_x, int location_y, const cha
     return obstacle;
 }
 SKIERDLL_API int Obstacle_move(Obstacle* obstacle, int num) {
-    //return obstacle->location_y - num;
     int result;
     __asm {
         MOV EAX, obstacle
@@ -245,8 +208,6 @@ SKIERDLL_API int Obstacle_move(Obstacle* obstacle, int num) {
     return result;
 }
 SKIERDLL_API void Obstacle_getPosition(Obstacle* obstacle, int* x, int* y) {
-    //*x = obstacle->location_x;
-    //*y = obstacle->location_y;
     __asm {
         MOV EAX, obstacle
         MOV EBX, x
@@ -260,8 +221,6 @@ SKIERDLL_API void Obstacle_getPosition(Obstacle* obstacle, int* x, int* y) {
     }
 }
 SKIERDLL_API void Obstacle_setPosition(Obstacle* obstacle, int x, int y) {
-    //obstacle->location_x = x;
-    //obstacle->location_y = y;
     __asm {
         MOV EAX, obstacle
         MOV ECX, x
@@ -272,7 +231,6 @@ SKIERDLL_API void Obstacle_setPosition(Obstacle* obstacle, int x, int y) {
     }
 }
 SKIERDLL_API const char* Obstacle_getAttribute(Obstacle* obstacle) {
-    //return obstacle->attribute;
     const char* result;
     __asm {
         MOV EAX, obstacle
@@ -282,7 +240,6 @@ SKIERDLL_API const char* Obstacle_getAttribute(Obstacle* obstacle) {
     return result;
 }
 SKIERDLL_API bool Obstacle_getPassed(Obstacle* obstacle) {
-    //return obstacle->passed;
     bool result;
     __asm {
         MOV EAX, obstacle
@@ -293,7 +250,6 @@ SKIERDLL_API bool Obstacle_getPassed(Obstacle* obstacle) {
     return result;
 }
 SKIERDLL_API void Obstacle_setPassed(Obstacle* obstacle, bool passed) {
-    //obstacle->passed = passed;
     __asm {
         MOV EAX, obstacle
         MOV CL, passed
@@ -340,37 +296,6 @@ SKIERDLL_API int rand_asm() {
     return result;
 }
 SKIERDLL_API void createObstacles(int start_row, int end_row, int num, const char* obs_type, int(*locations)[2], char(*attributes)[20], int* num_obstacles) {
-    //srand((unsigned int) time(NULL));
-    //int ref = num;
-    //int count = 0;
-    //for (int i = 0; i < 10 + num; i++) {
-    //    int row = rand() % (end_row - start_row + 1) + start_row;
-    //    int col = rand() % 10;
-    //    int location_x = col * 64 + 20;
-    //    int location_y = row * 64 + 20;
-    //    bool exists = false;
-    //    for (int j = 0; j < count; j++) {
-    //        if (locations[j][0] == location_x && locations[j][1] == location_y) {
-    //            exists = true;
-    //            break;
-    //       }
-    //    }
-    //    if (!exists) {
-    //        locations[count][0] = location_x;
-    //        locations[count][1] = location_y;
-    //        if (((strcmp(obs_type, "tree") == 0) || strcmp(obs_type, "flag") == 0) && (ref != 0 && ref <= num)) {
-    //            strcpy_s(attributes[count], 20, obs_type);
-    //            ref--;
-    //        } else {
-    //            const char* possible_attributes[] = { "tree", "flag" };
-    //            int random_index = rand() % 2;
-    //            strcpy_s(attributes[count], 20, possible_attributes[random_index]);
-    //
-    //        }
-    //        count++;
-    //    }
-    //}
-    //*num_obstacles = count;
     static int initialized = 0;
     static const char str_tree[] = "tree";
     static const char str_flag[] = "flag";
@@ -554,12 +479,6 @@ SKIERDLL_API void createObstacles(int start_row, int end_row, int num, const cha
     }
 }
 SKIERDLL_API void updateObstacles(int score, int* added_trees, int* added_flags) {
-    //if (score > 0 && score % 150 == 0 && *added_trees < 20) {
-    //    *added_trees += 2;
-    //}
-    //if (score > 0 && score % 200 == 0 && *added_flags < 10) {
-    //    *added_flags += 1;
-    //}
     __asm {
         MOV EAX, score
         TEST EAX, EAX
@@ -594,72 +513,247 @@ SKIERDLL_API void updateObstacles(int score, int* added_trees, int* added_flags)
     }
 }
 //Speed
-SKIERDLL_API void updateSpeed(int score, int* speed_bonus, int* base_speed,
-    const int* speed_levels, int levels_count, int* achieved_levels,
+SKIERDLL_API void updateSpeed(int score, int* speed_bonus, int* base_speed, const int* speed_levels, int levels_count, int* achieved_levels,
     int* achieved_count, int direction, int* current_speed) {
-    for (int i = 0; i < levels_count; i++) {
-        int level = speed_levels[i];
-        if (score >= level) {
-            int already_achieved = 0;
-            for (int j = 0; j < *achieved_count; j++) {
-                if (achieved_levels[j] == level) {
-                    already_achieved = 1;
-                    break;
-                }
-            }
-            if (!already_achieved) {
-                achieved_levels[(*achieved_count)++] = level;
-                (*speed_bonus)++;
-                (*base_speed)++;
-            }
-        }
+    int i, j, level, already_achieved;
+    __asm {
+        MOV i, 0
+
+        OUTER_LOOP:
+            MOV EAX, i
+            CMP EAX, levels_count
+            JGE CALC_CURRENT_SPEED
+            MOV EBX, speed_levels
+            MOV ECX, i
+            IMUL ECX, 4
+            ADD EBX, ECX
+            MOV EDX, DWORD PTR [EBX]
+            MOV level, EDX
+
+            MOV EAX, score
+            CMP EAX, level
+            JL NEXT_OUTER
+
+            MOV already_achieved, 0
+            MOV j, 0
+            
+            INNER_LOOP:
+                MOV EBX, achieved_count
+                MOV ECX, DWORD PTR [EBX]
+                MOV EAX, j
+                CMP EAX, ECX
+                JGE CHECK_ACHIEVED
+                
+                MOV EBX, achieved_levels
+                MOV ECX, j
+                IMUL ECX, 4
+                ADD EBX, ECX
+                MOV EDX, DWORD PTR [EBX]
+                CMP EDX, level
+                JNE NEXT_INNER
+
+                MOV already_achieved, 1
+                JMP CHECK_ACHIEVED
+
+                NEXT_INNER:
+                    INC j
+                    JMP INNER_LOOP
+
+            CHECK_ACHIEVED:
+                CMP already_achieved, 0
+                JNE NEXT_OUTER
+
+                MOV EBX, achieved_count
+                MOV ECX, DWORD PTR [EBX]
+                MOV EDI, achieved_levels
+                IMUL ECX, 4
+                ADD EDI, ECX
+                MOV EDX, level
+                MOV DWORD PTR [EDI], EDX
+
+                MOV EBX, achieved_count
+                MOV ECX, DWORD PTR [EBX]
+                INC ECX
+                MOV DWORD PTR [EBX], ECX
+
+                MOV EBX, speed_bonus
+                MOV ECX, DWORD PTR [EBX]
+                INC ECX
+                MOV DWORD PTR [EBX], ECX
+
+                MOV EBX, base_speed
+                MOV ECX, DWORD PTR [EBX]
+                INC ECX
+                MOV DWORD PTR [EBX], ECX
+
+                NEXT_OUTER:
+                    INC i
+                    JMP OUTER_LOOP
+
+        CALC_CURRENT_SPEED:
+            MOV EAX, direction
+            MOV EBX, EAX
+            SAR EBX, 31
+            XOR EAX, EBX
+            SUB EAX, EBX
+            IMUL EAX, 2
+            
+            MOV EBX, base_speed
+            MOV ECX, DWORD PTR [EBX]
+            SUB ECX, EAX
+
+            MOV EBX, current_speed
+            MOV DWORD PTR [EBX], ECX
     }
-    *current_speed = *base_speed - abs(direction) * 2;
 }
 
 //GameState
 SKIERDLL_API GameState* GameState_create() {
-    GameState* state = (GameState*)malloc(sizeof(GameState));
-    if (!state) return nullptr;
-    state->distance = 0;
-    state->score = 0;
-    state->obstaclesFlag = 0;
-    state->added_trees = 0;
-    state->added_flags = 0;
-    state->base_speed = 7;
-    state->speed_bonus = 0;
+    GameState* state;
+    __asm {
+        PUSH 28
+        CALL malloc
+        ADD ESP, 4
+        MOV state, EAX
+
+        TEST EAX, EAX
+        JZ END_CREATE
+
+        MOV DWORD PTR[EAX], 0
+        MOV DWORD PTR[EAX + 4], 0
+        MOV DWORD PTR[EAX + 8], 0
+        MOV DWORD PTR[EAX + 12], 0
+        MOV DWORD PTR[EAX + 16], 0
+        MOV DWORD PTR[EAX + 20], 7
+        MOV DWORD PTR[EAX + 24], 0
+
+        END_CREATE:
+    }
     return state;
 }
 SKIERDLL_API void GameState_updateDistance(GameState* state, int speed_y) {
-    if (state) {
-        state->distance += speed_y;
+    __asm {
+        MOV EAX, state
+        TEST EAX, EAX
+        JZ END_UPDATE
+
+        MOV ECX, speed_y
+        ADD DWORD PTR [EAX], ECX
+
+        END_UPDATE:
     }
 }
 SKIERDLL_API void GameState_addScore(GameState* state, int points) {
-    if (state) {
-        state->score += points;
+    __asm {
+        MOV EAX, state
+        TEST EAX, EAX
+        JZ END_ADD
+
+        MOV ECX, points
+        ADD DWORD PTR [EAX + 4], ECX
+
+        END_ADD:
     }
 }
 SKIERDLL_API int updateObstaclesCycle(GameState* state, int speed_y) {
-    if (!state) return 0;
-    int needs_update = 0;
-    if (state->distance >= 640 && state->obstaclesFlag == 0) {
-        state->obstaclesFlag = 1;
-        needs_update = 1;
-    }
-    if (state->distance >= 1280 && state->obstaclesFlag == 1) {
-        state->obstaclesFlag = 0;
-        state->distance -= 1280;
-        needs_update = 2;
+    int needs_update;
+    __asm {
+        MOV EAX, state
+        TEST EAX, EAX
+        JNZ STATE_VALID
+
+        MOV needs_update, 0
+        JMP END_CYCLE
+
+        STATE_VALID:
+            MOV needs_update, 0
+            MOV ECX, DWORD PTR [EAX]
+            CMP ECX, 640
+            JL CHECK_SECOND
+
+            MOV EDX, DWORD PTR [EAX + 8]
+            TEST EDX, EDX
+            JNZ CHECK_SECOND
+
+            MOV DWORD PTR [EAX + 8], 1
+            MOV needs_update, 1
+
+        CHECK_SECOND:
+            MOV ECX, DWORD PTR [EAX]
+            CMP ECX, 1280
+            JL END_CYCLE
+
+            MOV EDX, DWORD PTR [EAX + 8]
+            CMP EDX, 1
+            JNE END_CYCLE
+            
+            MOV DWORD PTR [EAX + 8], 0
+
+            MOV ECX, DWORD PTR [EAX]
+            SUB ECX, 1280
+            MOV DWORD PTR [EAX], ECX
+            MOV needs_update, 2
+
+        END_CYCLE:
     }
     return needs_update;
 }
-SKIERDLL_API int checkCollision(
-    int x1, int y1, int w1, int h1,
-    int x2, int y2, int w2, int h2
-) {
-    int overlapX = (x1 < x2 + w2) && (x1 + w1 > x2);
-    int overlapY = (y1 < y2 + h2) && (y1 + h1 > y2);
-    
-    return overlapX && overlapY;
+SKIERDLL_API int checkCollision(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2) {
+    int overlapX, overlapY, result;
+    __asm {
+        MOV EAX, x2
+        ADD EAX, w2
+        MOV EBX, x1
+        CMP EBX, EAX
+        JGE NO_OVERLAP_X
+
+        MOV EAX, x1
+        ADD EAX, w1
+        MOV EBX, x2
+        CMP EAX, EBX
+        JLE NO_OVERLAP_X
+
+        MOV overlapX, 1
+        JMP CHECK_Y
+
+        NO_OVERLAP_X:
+            MOV overlapX, 0
+
+        CHECK_Y:
+            MOV     EAX, y2
+            ADD     EAX, h2
+            MOV     EBX, y1
+            CMP     EBX, EAX
+            JGE     NO_OVERLAP_Y
+
+            MOV     EAX, y1
+            ADD     EAX, h1
+            MOV     EBX, y2
+            CMP     EAX, EBX
+            JLE     NO_OVERLAP_Y
+
+            MOV     overlapY, 1
+            JMP     CHECK_RESULT
+
+            NO_OVERLAP_Y:
+                MOV overlapY, 0
+
+        CHECK_RESULT:
+            MOV EAX, overlapX
+            TEST EAX, EAX
+            JZ NO_COLLISION
+
+            MOV EAX, overlapY
+            TEST EAX, EAX
+            JZ NO_COLLISION
+
+            MOV result, 1
+            JMP END_CHECK
+
+        NO_COLLISION :
+            MOV result, 0
+
+        END_CHECK :
+    }
+    return result;
 }
